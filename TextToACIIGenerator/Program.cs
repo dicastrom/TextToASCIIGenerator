@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace TextToACIIGenerator
 {
+    class Line
+    {
+
+
+    }
     class Program
     {
         private static Random _random = new Random();
@@ -18,6 +23,90 @@ namespace TextToACIIGenerator
                 retColor = ConsoleColor.Cyan;
             }
             return retColor;
+        }
+        public static List<List<string>> ToLists(string input, Dictionary<char, List<string>> Dict)
+        {
+            List<List<string>> DoubleList = new List<List<string>>();
+            List<string> RetList = new List<string>();
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+
+
+            foreach (char letter in input)
+            {
+                if (letter == '/')
+                {
+                    
+                    DoubleList.Add(RetList);
+                    RetList = new List<string>();
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+
+                }
+                else
+                {
+                    FindMatch(letter, RetList, Dict);
+                }
+            }
+            DoubleList.Add(RetList);
+
+            return DoubleList;
+        }
+
+
+        public static void Print2DList(List<List<string>> TwoD_List,int delay = 0, bool color = false,ConsoleColor specificCol = ConsoleColor.White )
+        {
+
+            foreach(List<string> Lst in TwoD_List)
+            {
+                Print(Lst);
+            }
+        }
+
+
+
+        public static List<string>ToList(string input, Dictionary<char, List<string>> Dict)
+        {
+            input = input.ToUpper();
+            List<string> RetList = new List<string>();
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+
+            foreach (char letter in input)
+            {
+                FindMatch(letter, RetList, Dict);
+            }
+
+            return RetList;
+
+         }
+
+        static void Help ()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("USAGE : ");
+            Console.WriteLine("Available characters a-z , . ");
+            Console.WriteLine("New Line = / ");
+            Console.WriteLine("If it does not look good either make the console bigger or add newlines");
+            Console.ResetColor();
         }
         static void FindMatch(char letter, List<string> Result,Dictionary<char,List<string>> Dict)
         {
@@ -60,7 +149,7 @@ namespace TextToACIIGenerator
 
         }
 
-        static void PrintWDelay(List<string> Print, int delay,bool randColor)
+        static void PrintWDelay(List<string> Print, int delay,bool randColor=false)
         {
             if (randColor)
             {
@@ -140,11 +229,6 @@ namespace TextToACIIGenerator
             Comma.Add("  |/ ");
             Comma.Add("  -  ");
 
-            /*
-  _ 
- (_)
-            */
-
             Dot.Add("     ");
             Dot.Add("     ");
             Dot.Add("     ");
@@ -153,20 +237,6 @@ namespace TextToACIIGenerator
             Dot.Add(" (_) ");
             Dot.Add("     ");
             Dot.Add("     ");
-
-
-            /**
-                 
-    
-    
-    
-  _ 
- ( )
- |/
-            */
-
-
-
 
             A.Add(@"            ");
             A.Add(@"     /\     ");
@@ -230,11 +300,6 @@ namespace TextToACIIGenerator
             G.Add(@"  \_____|");
             G.Add(@"         ");
 
-
-
-
-
-
             H.Add(@"  _    _ ");
             H.Add(@" | |  | |");
             H.Add(@" | |__| |");
@@ -244,7 +309,6 @@ namespace TextToACIIGenerator
             H.Add(@"         ");
             H.Add(@"         ");
 
-
             I.Add(@"  _____ ");
             I.Add(@" |_   _|");
             I.Add(@"   | |  ");
@@ -253,7 +317,6 @@ namespace TextToACIIGenerator
             I.Add(@" |_____|");
             I.Add(@"        ");
             I.Add(@"        ");
-
 
             J.Add(@"       _ ");
             J.Add(@"      | |");
@@ -273,7 +336,6 @@ namespace TextToACIIGenerator
             K.Add(@"       ");
             K.Add(@"       ");
 
-
             L.Add(@"  _      ");
             L.Add(@" | |     ");
             L.Add(@" | |     ");
@@ -282,7 +344,6 @@ namespace TextToACIIGenerator
             L.Add(@" |______|");
             L.Add(@"         ");
             L.Add(@"         ");
-
 
             M.Add(@"  __  __ ");
             M.Add(@" |  \/  |");
@@ -311,7 +372,6 @@ namespace TextToACIIGenerator
             O.Add(@"         ");
             O.Add(@"         ");
 
-
             P.Add(@"  _____  ");
             P.Add(@" |  __ \ ");
             P.Add(@" | |__) |");
@@ -339,7 +399,6 @@ namespace TextToACIIGenerator
             R.Add(@"         ");
             R.Add(@"         ");
 
-
             S.Add(@"   _____ ");
             S.Add(@"  / ____|");
             S.Add(@" | (___  ");
@@ -348,7 +407,6 @@ namespace TextToACIIGenerator
             S.Add(@" |_____/ ");
             S.Add(@"         ");
             S.Add(@"         ");
-
 
             T.Add(@"  _______ ");
             T.Add(@" |__   __|");
@@ -367,9 +425,6 @@ namespace TextToACIIGenerator
             U.Add(@"  \____/ ");
             U.Add(@"         ");
             U.Add(@"         ");
-
-
-
 
             V.Add(@" __      __");
             V.Add(@" \ \    / /");
@@ -416,19 +471,6 @@ namespace TextToACIIGenerator
             Z.Add(@"        ");
             Z.Add(@"        ");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             Dictionary<char, List<string>> Mapping = new Dictionary<char, List<string>>();
 
             //Here we add all the letters to the Dictionary mapping with thier respective List of strings
@@ -463,19 +505,6 @@ namespace TextToACIIGenerator
             Mapping.Add(',', Comma);
             Mapping.Add('.', Dot);
 
-
-
-            List<string> Result = new List<string>();
-
-            Result.Add(" ");
-            Result.Add(" ");
-            Result.Add(" ");
-            Result.Add(" ");
-            Result.Add(" ");
-            Result.Add(" ");
-            Result.Add(" ");
-            Result.Add(" ");
-
             Console.WriteLine("Enter a string");
 
             string input="";
@@ -483,16 +512,22 @@ namespace TextToACIIGenerator
             input =Console.ReadLine();
             input = input.ToUpper();
 
-            foreach(char letter in input)
-            {
-                FindMatch(letter, Result, Mapping);
-            }
+            // Help();
 
-            Print(Result);
-            PrintWDelay(Result, 300, true);
-            PrintColor(Result, ConsoleColor.Red);
+            //List<string> Lst = ToList(input, Mapping);
+            //PrintColor(Lst, ConsoleColor.Green);
+            //Print(Lst);
+            //PrintWDelay(Lst, 300, true);
+            //PrintColor(Lst, ConsoleColor.Red);
+
+
+            List<List<string>> LISTS = ToLists(input, Mapping);
+
+            Print2DList(LISTS);
+
+
+
             Console.ReadLine();
-
 
 
 
