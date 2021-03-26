@@ -1,4 +1,4 @@
-# TextToACIIGenerator
+# TextToASCIIGenerator
 This will allow users to type in a string that will then be converted to ACII art letters.
 
 Users can type in any character and it will output something like this. 
