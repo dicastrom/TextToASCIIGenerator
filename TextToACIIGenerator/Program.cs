@@ -6,11 +6,6 @@ using System.Threading.Tasks;
 
 namespace TextToACIIGenerator
 {
-    class Line
-    {
-
-
-    }
     class Program
     {
         private static Random _random = new Random();
@@ -24,161 +19,16 @@ namespace TextToACIIGenerator
             }
             return retColor;
         }
-        public static List<List<string>> ToLists(string input, Dictionary<char, List<string>> Dict)
-        {
-            List<List<string>> DoubleList = new List<List<string>>();
-            List<string> RetList = new List<string>();
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
 
-
-            foreach (char letter in input)
-            {
-                if (letter == '/')
-                {
-                    
-                    DoubleList.Add(RetList);
-                    RetList = new List<string>();
-                    RetList.Add("");
-                    RetList.Add("");
-                    RetList.Add("");
-                    RetList.Add("");
-                    RetList.Add("");
-                    RetList.Add("");
-                    RetList.Add("");
-                    RetList.Add("");
-
-                }
-                else
-                {
-                    FindMatch(letter, RetList, Dict);
-                }
-            }
-            DoubleList.Add(RetList);
-
-            return DoubleList;
-        }
-
-
-        public static void Print2DList(List<List<string>> TwoD_List,int delay = 0, bool color = false,ConsoleColor specificCol = ConsoleColor.White )
-        {
-
-            foreach(List<string> Lst in TwoD_List)
-            {
-                Print(Lst);
-            }
-        }
-
-
-
-        public static List<string>ToList(string input, Dictionary<char, List<string>> Dict)
-        {
-            input = input.ToUpper();
-            List<string> RetList = new List<string>();
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-            RetList.Add("");
-
-            foreach (char letter in input)
-            {
-                FindMatch(letter, RetList, Dict);
-            }
-
-            return RetList;
-
-         }
-
-        static void Help ()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("USAGE : ");
-            Console.WriteLine("Available characters a-z , . ");
-            Console.WriteLine("New Line = / ");
-            Console.WriteLine("If it does not look good either make the console bigger or add newlines");
-            Console.ResetColor();
-        }
-        static void FindMatch(char letter, List<string> Result,Dictionary<char,List<string>> Dict)
-        {
-            bool keyExists = Dict.ContainsKey(letter);
-            if (keyExists)
-            {
-                List<string> Letter_ACII = Dict[letter];
-
-                for (int i = 0; i < Letter_ACII.Count; i++)
-                {
-                    Result[i] += Letter_ACII[i];
-                }
-
-            }
-            else
-            {
-
-                return;
-            }
-            
-
-
-        }
-        static void Print(List<string> Print)
-        {
-            foreach(string line in Print)
-            {
-                Console.WriteLine(line);
-            }
-
-        }
-        static void PrintColor(List<string> Print, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            foreach (string line in Print)
-            {
-                Console.WriteLine(line);
-            }
-            Console.ResetColor();
-
-        }
-
-        static void PrintWDelay(List<string> Print, int delay,bool randColor=false)
-        {
-            if (randColor)
-            {
-                foreach (string line in Print)
-                {
-                    Console.ForegroundColor = GetRandomConsoleColor();
-                    Console.WriteLine(line);
-                    System.Threading.Thread.Sleep(delay);
-                    Console.ResetColor();
-                }
-            }
-            else
-            {
-                foreach (string line in Print)
-                {
-                    Console.WriteLine(line);
-                    System.Threading.Thread.Sleep(delay);
-                }
-            }
-
-            
-        }
-        static void Main(string[] args)
+        private static Dictionary<char, List<string>> CreateMapping()
         {
             /*
              * 
-             * Here I will map all the characters to a ACII List<strings> that will later be used to print out the string
-             * in big ACII letters, each character will be added to the next and so on.
-             */
+             * THIS FUNCTION is used to create a Hash map of the characters to their respective ACII characters
+            * 
+            * Here I will map all the characters to a ACII List<strings> that will later be used to print out the string
+            * in big ACII letters, each character will be added to the next and so on.
+            */
 
 
             List<string> A = new List<string>();
@@ -238,14 +88,14 @@ namespace TextToACIIGenerator
             Dot.Add("     ");
             Dot.Add("     ");
 
-            A.Add(@"            ");
-            A.Add(@"     /\     ");
-            A.Add(@"    /  \    ");
-            A.Add(@"   / /\ \   ");
-            A.Add(@"  / ____ \  ");
-            A.Add(@" /_/    \_\ ");
-            A.Add(@"            ");
-            A.Add(@"            ");
+            A.Add(@"          ");
+            A.Add(@"    /\    ");
+            A.Add(@"   /  \   ");
+            A.Add(@"  / /\ \  ");
+            A.Add(@" / ____ \ ");
+            A.Add(@"/_/    \_\");
+            A.Add(@"           ");
+            A.Add(@"           ");
 
             B.Add(@"  ____  ");
             B.Add(@" |  _ \ ");
@@ -493,7 +343,7 @@ namespace TextToACIIGenerator
             Mapping.Add('Q', Q);
             Mapping.Add('R', R);
             Mapping.Add('S', S);
-            Mapping.Add('T',T);
+            Mapping.Add('T', T);
             Mapping.Add('U', U);
             Mapping.Add('V', V);
             Mapping.Add('W', W);
@@ -505,25 +355,204 @@ namespace TextToACIIGenerator
             Mapping.Add(',', Comma);
             Mapping.Add('.', Dot);
 
-            Console.WriteLine("Enter a string");
+
+
+            return Mapping;
+
+
+        }
+        public static List<List<string>> ToLists(string input)
+        {
+            Dictionary<char, List<string>> Dict = CreateMapping();
+
+            List<List<string>> DoubleList = new List<List<string>>();
+            List<string> RetList = new List<string>();
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+
+
+            foreach (char letter in input)
+            {
+                if (letter == '/')
+                {
+                    
+                    DoubleList.Add(RetList);
+                    RetList = new List<string>();
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+                    RetList.Add("");
+
+                }
+                else
+                {
+                    FindMatch(letter, RetList, Dict);
+                }
+            }
+            DoubleList.Add(RetList);
+
+            return DoubleList;
+        }
+
+
+        public static void PrintLists(List<List<string>> TwoD_List,ConsoleColor color = ConsoleColor.White )
+        {
+            Console.ForegroundColor = color;
+            foreach (List<string> Lst in TwoD_List)
+            {
+                Print(Lst);
+            }
+            Console.ResetColor();
+        }
+
+        public static void PrintListsWDelay(List<List<string>> TwoD_List, int delay, bool randColor = false)
+        {
+            if (randColor)
+            {
+                Console.ForegroundColor = GetRandomConsoleColor();
+                
+
+                    foreach (List<string> Lst in TwoD_List)
+                    {
+                        PrintWDelay(Lst,delay,true);
+                    }
+
+              
+                Console.ResetColor();
+            }
+            else
+            {
+                foreach (List<string> Lst in TwoD_List)
+                {
+                    PrintWDelay(Lst, delay, false);
+                }
+            }
+           
+           
+        }
+
+
+
+        public static List<string>ToList(string input)
+        {
+            Dictionary<char, List<string>> Dict = CreateMapping();
+            input = input.ToUpper();
+            List<string> RetList = new List<string>();
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+            RetList.Add("");
+
+            foreach (char letter in input)
+            {
+                FindMatch(letter, RetList, Dict);
+            }
+
+            return RetList;
+
+         }
+
+        static void Help ()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("USAGE : ");
+            Console.WriteLine("Available characters a-z , . ");
+            Console.WriteLine("New Line = / ");
+            Console.WriteLine("If it does not look good either make the console bigger or add newlines");
+            Console.ResetColor();
+        }
+        static void FindMatch(char letter, List<string> Result,Dictionary<char,List<string>> Dict)
+        {
+            bool keyExists = Dict.ContainsKey(letter);
+            if (keyExists)
+            {
+                List<string> Letter_ACII = Dict[letter];
+
+                for (int i = 0; i < Letter_ACII.Count; i++)
+                {
+                    Result[i] += Letter_ACII[i];
+                }
+
+            }
+            else
+            {
+
+                return;
+            }
+            
+
+
+        }
+        static void Print(List<string> Print,ConsoleColor color = ConsoleColor.White)
+        {
+            Console.ForegroundColor = color;
+            foreach (string line in Print)
+            {
+                Console.WriteLine(line);
+            }
+            Console.ResetColor();
+
+        }
+  
+
+        static void PrintWDelay(List<string> Print, int delay,bool randColor=false)
+        {
+            if (randColor)
+            {
+                foreach (string line in Print)
+                {
+                    Console.ForegroundColor = GetRandomConsoleColor();
+                    Console.WriteLine(line);
+                    System.Threading.Thread.Sleep(delay);
+                    Console.ResetColor();
+                }
+            }
+            else
+            {
+                foreach (string line in Print)
+                {
+                    Console.WriteLine(line);
+                    System.Threading.Thread.Sleep(delay);
+                }
+            }
+
+            
+        }
+        static void Main(string[] args)
+        {
+           
+
+            //Console.WriteLine("Enter a string");
 
             string input="";
 
             input =Console.ReadLine();
             input = input.ToUpper();
 
-            // Help();
+             //Help();
 
-            //List<string> Lst = ToList(input, Mapping);
-            //PrintColor(Lst, ConsoleColor.Green);
+            //List<string> Lst = ToList(input);
+            //Print(Lst, ConsoleColor.Green);
             //Print(Lst);
             //PrintWDelay(Lst, 300, true);
-            //PrintColor(Lst, ConsoleColor.Red);
-
-
-            List<List<string>> LISTS = ToLists(input, Mapping);
-
-            Print2DList(LISTS);
+            //Print(Lst, ConsoleColor.Red);
+            List<List<string>> LISTS = ToLists(input);
+            //PrintLists(LISTS);
+            PrintListsWDelay(LISTS, 300, true);
 
 
 
